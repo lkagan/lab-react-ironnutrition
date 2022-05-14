@@ -1,34 +1,48 @@
 import { Divider, Input } from 'antd';
+import { useState } from "react";
 
 function AddFoodForm({addFood}) {
 
-    const food = {
+    const defaultFood = {
         name: '',
-        image: '',
         calories: '',
-        servings: ''
+        servings: '',
+        image: ''
     }
 
-    const addFoodHandler = (e) => {
+    const [food, setFood] = useState(defaultFood);
+
+    // Add the new food to the list when user submits the form
+    const submitHandler = (e) => {
         e.preventDefault();
         addFood(food);
+        setFood(defaultFood)
+    }
+
+    // Update the food item as the user types
+    const changeHandler = (e) => {
+        const {name, value} = e.target;
+        setFood(food => ({
+            ...food,
+            [name]: value
+        }))
     }
 
   return (
-    <form onSubmit={addFoodHandler}>
+    <form onSubmit={submitHandler}>
       <Divider>Add Food Entry</Divider>
 
       <label>Name</label>
-      <Input value={undefined} name="name" type="text" onChange={e => food.name = e.target.value} />
+      <Input value={food.name} name="name" type="text" onChange={e => changeHandler(e)} />
 
       <label>Image</label>
-      <Input value={undefined} name="image" type="text" onChange={e => food.image = e.target.value} />
+      <Input value={food.image} name="image" type="text" onChange={e => changeHandler(e) } />
 
       <label>Calories</label>
-      <Input value={undefined} name="calories" type="number" onChange={e => food.calories = e.target.value} />
+      <Input value={food.calories} name="calories" type="number" onChange={e => changeHandler(e) } />
 
       <label>Servings</label>
-      <Input value={undefined} name="servings" type="number" onChange={e => food.servings = e.target.value} />
+      <Input value={food.servings} name="servings" type="number" onChange={e => changeHandler(e) } />
 
       <button type="submit">Create</button>
     </form>
