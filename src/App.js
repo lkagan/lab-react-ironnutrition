@@ -2,24 +2,24 @@ import { useState } from 'react';
 import './App.css';
 import AddFoodForm from './components/AddFoodForm';
 import FoodBox from './components/FoodBox';
-import foods from './foods.json';
+import foodsImport from './foods.json';
 
 
 function App() {
-  const [food, setFood] = useState(foods);
+  const [foods, setFoods] = useState(foodsImport);
 
   const addFood = (food) => {
-    setFood([...food, food]);
+    setFoods([food, ...foods]);
   }
   return (
     <div className="App">
     <AddFoodForm addFood={addFood}/>
       <h1>Food List</h1>
       
-      {food.map((food) => {
+      {foods.map((food) => {
         return (
           <FoodBox
-        food={food}
+        food={food} key={food.name}
       />
         );
       })}
