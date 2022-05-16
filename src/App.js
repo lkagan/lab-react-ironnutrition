@@ -21,8 +21,7 @@ function App() {
   }
 
   const deleteFood = (name) => {
-    console.log('deleteFood');
-    setFoods(foods.filter(food => food.name !== name));
+    setFoodsCopy(foodsCopy.filter(food => food.name !== name));
   }
   return (
     <div className="App">
