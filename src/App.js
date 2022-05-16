@@ -1,3 +1,4 @@
+import Search from './components/Search';
 import { useState } from 'react';
 import './App.css';
 import AddFoodForm from './components/AddFoodForm';
@@ -7,21 +8,33 @@ import foodsImport from './foods.json';
 
 function App() {
   const [foods, setFoods] = useState(foodsImport);
+  const [foodsCopy, setFoodsCopy] = useState(foods);
+
+  const searchHandler = (e) => {
+    setFoodsCopy(foods.filter(food => {
+      return food.name.toLowerCase().includes(e.target.value.toLowerCase());
+    }))
+  }
 
   const addFood = (food) => {
     setFoods([food, ...foods]);
   }
 
+  const deleteFood = (name) => {
+    console.log('deleteFood');
+    setFoods(foods.filter(food => food.name !== name));
+  }
   return (
     <div className="App">
+     <h2>Search</h2>
+    <Search searchHandler={searchHandler} />
     <AddFoodForm addFood={addFood}/>
       <h1>Food List</h1>
       
-      {foods.map((food) => {
+      {foodsCopy.map((food) => {
         return (
           <FoodBox
-        food={food}
-        key={food.name}
+        food={food} key={food.name} deleteFood={deleteFood}
       />
         );
       })}
