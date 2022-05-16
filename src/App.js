@@ -19,6 +19,11 @@ function App() {
   const addFood = (food) => {
     setFoods([food, ...foods]);
   }
+
+  const deleteFood = (name) => {
+    console.log('deleteFood');
+    setFoods(foods.filter(food => food.name !== name));
+  }
   return (
     <div className="App">
      <h2>Search</h2>
@@ -29,7 +34,7 @@ function App() {
       {foodsCopy.map((food) => {
         return (
           <FoodBox
-        food={food} key={food.name}
+        food={food} key={food.name} deleteFood={deleteFood}
       />
         );
       })}
